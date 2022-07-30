@@ -1,0 +1,51 @@
+clc;
+clear ;
+close all;
+f=rgb2gray(im2double(imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg')));
+f=imresize(f,[256 256]);
+figure,
+subplot(331),imshow(f), title('input image');
+[M,N]=size(f);
+h=fspecial('gaussian',260,2);
+g=(imfilter(f,h,'circular'));
+subplot(332),imshow(g,[]);title('blurred image');
+
+b.	Restore the image usinf Inverse Filtering
+
+G = fftshift(fft2(g));
+subplot(333),imshow(log(abs(G)),[]);title('fourier transform of degraded image')
+H = fftshift(fft2(h));
+subplot(334),imshow(log(abs(H)),[]); title('fourier transform of the degraded function');
+F = zeros(size(f));
+R=70;
+for u=1:size(f,2)
+    for v=1:size(f,1)
+        du = u - size(f,2)/2;
+        dv = v - size(f,1)/2;
+        if du^2 + dv^2 <= R^2;
+        F(v,u) = G(v,u)./H(v,u);
+        end
+    end
+end
+subplot(335),imshow(log(abs(F)),[]); title('estimated function');
+fRestored = abs(ifftshift(ifft2(F)));
+subplot(336),imshow(fRestored, []), title('restored image using inverse filtering');
+
+c.	Restore the image using Weiner Filtering
+
+clc; clear ; close all;
+I = im2double(imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg'));
+subplot(221),imshow(I);title('Original Image');
+LEN = 20;
+THETA = 45;
+PSF = fspecial('motion', LEN, THETA);
+blurred = imfilter(I, PSF, 'conv', 'circular');
+subplot(222),imshow(blurred); title('blurred image');
+noise_mean = 0;
+noise_var = 0.001;
+blurred_noisy = imnoise(blurred, 'gaussian', noise_mean, noise_var);
+subplot(223),imshow(blurred_noisy),title('Simulate Blur and Noise')
+estimated_nsr = noise_var / var(I(:));
+wnr3 = deconvwnr(blurred_noisy, PSF, estimated_nsr);
+subplot(224),imshow(wnr3),title('Restoration of Blurred, Noisy Image Using Estimated NSR');
+
