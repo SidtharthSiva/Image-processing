@@ -1,0 +1,16 @@
+fixed = dicomread('1');
+moving = dicomread('2');
+figure(1);
+imshowpair(moving,fixed,'montage');
+title('Unregistered');
+
+[optimizer,metric] = imregconfig('multimodal');
+
+movingRegisteredDefault = imregister(moving,fixed,'affine',optimizer,metric);
+figure(2);
+imshowpair(movingRegisteredDefault,fixed);
+title('A: Default Registration');
+
+disp(optimizer);
+disp(metric);
+
