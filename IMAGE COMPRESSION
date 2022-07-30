@@ -1,0 +1,20 @@
+clc; 
+clear all;
+close all;
+I=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+level=graythresh(I);
+bw=im2bw(I,level);
+bw1=bw'; 
+a=double(bw1(:))'; 
+rle(1)=a(1); 
+m=2; 
+rle(m)=1;
+for i=1:length(a)-1
+    if a(i)==a(i+1)
+        rle(m)=rle(m)+1;
+    else
+        m=m+1; 
+        rle(m)=1;       
+    end
+end
+display(rle);
