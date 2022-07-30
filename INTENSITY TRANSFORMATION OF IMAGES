@@ -1,0 +1,203 @@
+x=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+figure;
+subplot(441);
+imshow(x);
+title('t2 color');
+
+x1=rgb2gray(x);
+subplot(442);
+imshow(x1);
+title('t2 grayscale');
+
+[m,n]= size(x1);
+
+%negative
+for  i=1:m
+    for j=1:n
+        s(i,j)=255-x1(i,j);
+    end
+end
+subplot(443);
+imshow(s);
+title('negative t2');
+
+%log
+x1=double(x1);
+
+When c is equal to 1
+c=1;
+for  i=1:m
+    for j=1:n
+        t(i,j)=c*log(1+x1(i,j));
+    end
+end
+subplot(444);
+imshow(uint8(t));
+title('log t2 when c=1');
+
+When c is equal to 40
+c=40;
+for  i=1:m
+    for j=1:n
+        t(i,j)=c*log(1+x1(i,j));
+    end
+end
+subplot(445);
+imshow(uint8(t));
+title('log t2 when c=40');
+
+When c is equal to 100
+c=100;
+for  i=1:m
+    for j=1:n
+        t(i,j)=c*log(1+x1(i,j));
+    end
+end
+subplot(446);
+imshow(uint8(t));
+title('log t2 when c=100');
+
+%gamma
+When gamma is equal to 0.5
+g=0.2;
+for  i=1:m
+    for j=1:n
+        u(i,j)=c*x1(i,j)^g;
+    end
+end
+subplot(447);
+imshow(uint8(u));
+title('gamma t2 when g=0.5');
+
+When gamma is equal to 1.5
+g=1.5;
+for  i=1:m
+    for j=1:n
+        u(i,j)=c*x1(i,j)^g;
+    end
+end
+subplot(449);
+imshow(uint8(u));
+title('gamma t2 when g=1.5');
+
+
+x1=double(x1);
+[m,n]=size(x1);
+
+%greyscale slicing
+for i=1:m
+    for j=1:n
+        if x1(i,j)>=100 && x1(i,j)<=150
+            s(i,j)=255;
+        else
+            s(i,j)=0;
+        end
+    end
+end
+subplot(443);
+imshow(uint8(s));
+title('slice wo bg');
+
+for i=1:m
+    for j=1:n
+        if x1(i,j)>=100 && x1(i,j)<=150
+            t(i,j)=255;
+        else
+            t(i,j)=x1(i,j);
+        end
+    end
+end
+subplot(444);
+imshow(uint8(t));
+title('slice w bg');
+
+subplot(445);
+histogram(s);
+title('hist of slice wo bg');
+subplot(447);
+histogram(t);
+title('hist of slice w bg');
+
+%bit plane slicing
+a1=bitget(x1,1);
+figure;
+subplot(331),imshow(a1),title('Plane 1');
+
+a2=bitget(x1,2);
+subplot(332),imshow(a2),title('Plane 2');
+
+a3=bitget(x1,3);
+subplot(333),imshow(a3),title('Plane 3');
+
+a4=bitget(x1,4);
+subplot(334),imshow(a4),title('Plane 4');
+
+a5=bitget(x1,5);
+subplot(335),imshow(a5),title('Plane 5');
+
+a6=bitget(x1,6);
+subplot(336),imshow(a6),title('Plane 6');
+
+a7=bitget(x1,7);
+subplot(337),imshow(a7),title('Plane 7');
+
+a8=bitget(x1,8);
+subplot(338),imshow(a8),title('Plane 8');
+
+%contrast stretching
+a=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+a=double(a);
+s=size(a);
+
+%% Defining points and calculating equation parameters
+p1=[0,0];
+p2=[150,20];
+p3=[200,200];
+p4=[255,255];
+m1=(p1(1,2)-p2(1,2))/(p1(1,1)-p2(1,1));
+m2=(p2(1,2)-p3(1,2))/(p2(1,1)-p3(1,1));
+m3=(p3(1,2)-p4(1,2))/(p3(1,1)-p4(1,1));
+
+c1=p1(1,2)-m1*p1(1,1);
+c2=p2(1,2)-m2*p2(1,1);
+c3=p3(1,2)-m3*p3(1,1);
+
+%% Transformation function
+t=[];
+for x=0:255
+    if(x<=p2(1,1))
+        t=[t (m1*x+c1)];
+    end
+    if(x>p2(1,1) && x<=p3(1,1))
+        t=[t (m2*x+c2)];
+    end
+    if(x>p3(1,1) && x<=p4(1,1))
+        t=[t (m3*x+c3)];
+    end
+end
+
+
+%% Getting output image
+for n=1:s(1,1)
+    for m=1:s(1,2)
+        ot(n,m)=t(a(n,m)+1);
+    end
+end
+
+plot(t)
+grid on;
+xlabel('Intensity in input image');
+ylabel('Intensity in output image')
+title('Piece-wise linear transformation : Contrast stretching function')
+
+
+figure()
+subplot(221)
+imshow(a/255)
+title('Original image')
+subplot(222)
+imshow(ot./255)    
+title('Contrast stretching')
+subplot(223);
+plot(t);
+
