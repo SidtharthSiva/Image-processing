@@ -1,0 +1,106 @@
+%% 1-D DFT
+x = [1,4,6,8,1,5];
+l = length(x);
+y = x;
+for k = 0:l-1
+    y(k+1)= 0;
+    for n = 0:l-1
+        y(k+1) = y(k+1) + x(n+1)*exp(-1i*n*k*2*pi/l);
+    end
+end
+% just applying the formula of 1D DFT
+figure;
+subplot(1,3,1);
+stem(x);
+title('sequence');
+xlabel('n');
+ylabel('amplitude');
+
+subplot(1,3,2);
+stem(abs(y));
+title('magnitude response');
+xlabel('k');
+ylabel('amplitude');
+
+subplot(1,3,3);
+stem(angle(y));
+title('phase response');
+xlabel('k');
+ylabel('angle');
+
+%% 2D DFT on a small matrix
+% it is much better to use this method over directly using the formula for
+% 2D DFT since it is much faster even for small matrices like this.
+fxy = [0,1,2,1;1,2,3,2;2,3,4,3;1,2,3,2];
+m = size(fxy,1);
+n = size(fxy,2);
+
+% the two kernels
+K1 = zeros(m,m);
+K2 = zeros(n,n);
+
+for j = 1:m
+    for i = 1:m
+        K1(i,j) = exp(-1i*2*pi*(j-1)*(i-1)/m);
+    end
+
+for j = 1:n
+    for i = 1:n
+end
+        K2(i,j) = exp(-1i*2*pi*(j-1)*(i-1)/n);
+    end
+end
+
+Fuv = K1*fxy*K2;
+
+disp('The input matrix is');
+disp(fxy);
+disp('The DFT of the matrix is');
+disp(Fuv);
+
+%% read image
+
+I = imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+I = rgb2gray(I);
+[m,n] = size(I);
+%% 2d DFT of image
+% if we take the DFT of the image directly, the origin will appear at a
+% corner. To shift this to the center, we mutliply values at alternating
+% positions with -1 as follows.
+I1 = double(I);
+for x = 0:m-1
+    for y = 0:n-1
+        I1(x+1,y+1) = ((-1)^(x+y))*I1(x+1,y+1);
+    end
+end
+% instead of the above double for loop, you can use the inbuilt function
+% fftshift AFTER doing the DFT loop as will be shown later.
+
+K1 = zeros(m,m);
+K2 = zeros(n,n);
+
+for j = 1:m
+    for i = 1:m
+        K1(i,j) = exp(-1i*2*pi*(j-1)*(i-1)/m);
+    end
+end
+
+for j = 1:n
+    for i = 1:n
+        K2(i,j) = exp(-1i*2*pi*(j-1)*(i-1)/n);
+    end
+end
+
+IS = K1*I1*K2;
+% if you didnt use the double for loop for multiplying  -1 to the odd
+% coordinates then you can use the function fftshift here as
+% IS = fftshift(IS)
+figure;
+subplot(1,2,1);
+imshow(I);
+title('image');
+
+subplot(1,2,2);
+mesh(abs(IS));
+title('DFT');
+
