@@ -1,0 +1,67 @@
+clear all;
+close all;
+a=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+a1=rgb2gray(a);
+subplot(221);
+imshow(a1);
+title('t2 grayscale');
+
+[M1,N1] = size(a1);  
+   
+M2=900;
+N2=950;
+
+I2 = zeros(M2,N2);
+ 
+sx = N2/N1;     % Scale in x
+sy = M2/M1;     % Scale in y
+
+for x=1:N2
+for y=1:M2
+
+% Calculate position in input image
+
+v = x/sx;
+w = y/sy;
+
+% Pick the nearest neighbor to (v,w)
+v = round(v);
+w = round(w);
+I2(y,x) = a1(w,v);
+end
+end
+subplot(222);
+imshow(uint8(I2));
+title('Interpolated to nearest neighbour');
+
+MATRIX INTERPOLATION
+I1=randi(7,[4,4]);
+disp(I1);
+
+[M1,N1] = size(I1);  
+   
+M2=6;
+N2=6;
+
+I2 = zeros(M2,N2);
+ 
+sx = N2/N1;     % Scale in x
+sy = M2/M1;     % Scale in y
+
+for x=1:N2
+for y=1:M2
+
+% Calculate position in input image
+
+v = x/sx;
+w = y/sy;
+
+% Pick the nearest neighbor to (v,w)
+v = round(v);
+w = round(w);
+I2(y,x) = I1(w,v);
+end
+end
+
+disp(I2);
+
