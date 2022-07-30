@@ -1,0 +1,56 @@
+x=imread('C:\Users\dip lab 1\Downloads\medpix\t2brain.jpg');
+figure;
+subplot(441);
+imshow(x);
+title('t2 color');
+x1=rgb2gray(x);
+subplot(442);
+imshow(x1);
+title('t2 grayscale');
+x2=im2bw(x1);
+subplot(443);
+imshow(x2);
+title('t2 binary');
+
+y=imread('C:\Users\dip lab 1\Downloads\medpix\retinaconvertedt2.jpg');
+subplot(444);
+imshow(y);
+title('retina gray');
+y2=im2bw(y);
+subplot(445);
+imshow(y2);
+title('retina binary');
+
+%arithmetic operations
+z=imadd(x1,y);
+subplot(446);
+imshow(z);
+title('added image');
+
+s=imsubtract(x1,y);
+subplot(447);
+imshow(s);
+title('subtracted image');
+
+%logical operations
+a=or(x2,y2);
+subplot(448);
+imshow(a);
+title('OR image');
+
+b=and(x2,y2);
+subplot(449);
+imshow(b);
+title('AND image');
+
+c=not(x2);
+subplot(4,4,10);
+imshow(c);
+title('NOT image');
+
+d=xor(x2,y2);
+subplot(4,4,11);
+imshow(d);
+title('XOR image');
+
+
