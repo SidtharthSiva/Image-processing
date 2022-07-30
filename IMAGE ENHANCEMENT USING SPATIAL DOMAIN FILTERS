@@ -1,0 +1,148 @@
+clc;
+clear all;
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+A=rgb2gray(A);
+subplot(331),imshow(A), title ('original image');
+%GAUSSIAN
+a = imnoise(A,'gaussian');
+figure(1);
+subplot(332);
+imshow(a);
+title('t2 brain image with gaussian noise');
+m = size(a,1);
+n = size(a,2);
+k = 3; k1 = (k-1)/2; k2 = (k+1)/2;
+W1 = ones(k,k); N = sum(sum(W1));
+Izp = [zeros(size(a,1),k1),a,zeros(size(a,1),k1)];
+Izp = [zeros(k1,size(Izp,2));Izp;zeros(k1,size(Izp,2))];
+I3 = zeros(size(Izp));
+
+for i = 1:m
+    for j = 1:n        
+        T = double(Izp(i:i+k-1,j:j+k-1));
+        I3(i+k1,j+k1) = sum(sum(T.*W1))/N;        
+    end
+end
+subplot(333),imshow(uint8(I3)); title('avg filtered image');
+
+% 1b) weighted average filtering
+k = 3; k1 = (k-1)/2; k2 = (k+1)/2;
+Izp = [zeros(size(a,1),k1),a,zeros(size(a,1),k1)];
+Izp = [zeros(k1,size(Izp,2));Izp;zeros(k1,size(Izp,2))];
+I3 = zeros(size(Izp));
+if k == 5
+    W1 = [1,2,4,2,1;2,4,8,4,2;4,8,16,8,4;2,4,8,4,2;1,2,4,2,1];
+elseif k == 3
+    W1 = [1,2,1;2,4,2;1,2,1];
+end
+N = sum(sum(W1));
+
+
+for i = 1:m
+    for j = 1:n        
+        T = double(Izp(i:i+k-1,j:j+k-1));
+        I3(i+k1,j+k1) = sum(sum(T.*W1))/N;        
+    end
+end
+subplot(334),imshow(uint8(I3)); title('weighted avg filtered image');
+
+
+
+clc;
+clear all;
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+A=rgb2gray(A);
+subplot(331),imshow(A), title ('original image');
+%SALT AND PEPPER NOISE
+a = imnoise(A,'salt & pepper');
+figure(1);
+subplot(332);
+imshow(a);
+title('t2 brain image with salt and pepper noise');
+m = size(a,1);
+n = size(a,2);
+k = 3; k1 = (k-1)/2; k2 = (k+1)/2;
+W1 = ones(k,k); N = sum(sum(W1));
+Izp = [zeros(size(a,1),k1),a,zeros(size(a,1),k1)];
+Izp = [zeros(k1,size(Izp,2));Izp;zeros(k1,size(Izp,2))];
+I3 = zeros(size(Izp));
+
+for i = 1:m
+    for j = 1:n        
+        T = double(Izp(i:i+k-1,j:j+k-1));
+        I3(i+k1,j+k1) = sum(sum(T.*W1))/N;        
+    end
+end
+subplot(333),imshow(uint8(I3)); title('avg filtered image');
+
+% 1b) weighted average filtering
+k = 3; k1 = (k-1)/2; k2 = (k+1)/2;
+Izp = [zeros(size(a,1),k1),a,zeros(size(a,1),k1)];
+Izp = [zeros(k1,size(Izp,2));Izp;zeros(k1,size(Izp,2))];
+I3 = zeros(size(Izp));
+if k == 5
+    W1 = [1,2,4,2,1;2,4,8,4,2;4,8,16,8,4;2,4,8,4,2;1,2,4,2,1];
+elseif k == 3
+    W1 = [1,2,1;2,4,2;1,2,1];
+end
+N = sum(sum(W1));
+
+
+for i = 1:m
+    for j = 1:n        
+        T = double(Izp(i:i+k-1,j:j+k-1));
+        I3(i+k1,j+k1) = sum(sum(T.*W1))/N;        
+    end
+end
+subplot(334),imshow(uint8(I3)); title('weighted avg filtered image');
+
+
+
+clc;
+clear all;
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+A=rgb2gray(A);
+subplot(331),imshow(A), title ('original image');
+a = imnoise(A,'speckle');
+figure(1);
+subplot(332);
+imshow(a);
+%SPECKLE
+title('t2 brain image with speckle noise');
+m = size(a,1);
+n = size(a,2);
+k = 3; k1 = (k-1)/2; k2 = (k+1)/2;
+W1 = ones(k,k); N = sum(sum(W1));
+Izp = [zeros(size(a,1),k1),a,zeros(size(a,1),k1)];
+Izp = [zeros(k1,size(Izp,2));Izp;zeros(k1,size(Izp,2))];
+I3 = zeros(size(Izp));
+
+for i = 1:m
+    for j = 1:n        
+        T = double(Izp(i:i+k-1,j:j+k-1));
+        I3(i+k1,j+k1) = sum(sum(T.*W1))/N;        
+    end
+end
+subplot(333),imshow(uint8(I3)); title('avg filtered image');
+
+% 1b) weighted average filtering
+k = 3; k1 = (k-1)/2; k2 = (k+1)/2;
+Izp = [zeros(size(a,1),k1),a,zeros(size(a,1),k1)];
+Izp = [zeros(k1,size(Izp,2));Izp;zeros(k1,size(Izp,2))];
+I3 = zeros(size(Izp));
+if k == 5
+    W1 = [1,2,4,2,1;2,4,8,4,2;4,8,16,8,4;2,4,8,4,2;1,2,4,2,1];
+elseif k == 3
+    W1 = [1,2,1;2,4,2;1,2,1];
+end
+N = sum(sum(W1));
+
+
+for i = 1:m
+    for j = 1:n        
+        T = double(Izp(i:i+k-1,j:j+k-1));
+        I3(i+k1,j+k1) = sum(sum(T.*W1))/N;        
+    end
+end
+subplot(334),imshow(uint8(I3)); title('weighted avg filtered image');
+
