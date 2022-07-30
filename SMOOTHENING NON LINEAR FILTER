@@ -1,0 +1,169 @@
+clc;
+clear all;
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+A=rgb2gray(A);
+%GAUSSIAN
+a = imnoise(A,'gaussian');
+m = size(a,1);
+n = size(a,2);
+% Zero padding on all 4 sides
+New=zeros(size(a));
+Pad = padarray(a,[1 1]);
+% Median Filter without using a In-Built Funtion
+for i= 1:size(Pad,1)-2
+    for j=1:size(Pad,2)-2
+        filter=zeros(9,1);
+        inc=1;
+        for x=1:3
+            for y=1:3
+                filter(inc)=Pad(i+x-1,j+y-1);
+                inc=inc+1;
+            end
+        end
+        med=sort(filter);
+        New(i,j)=med(5);
+    end
+end
+% Converting the output values to 0-255 range
+I1=uint8(New);
+subplot(335);
+imshow(I1);
+title('Median Filtering');
+
+%2b) Min filters
+a=double(a);
+h1=ones(3,3);
+for i=1:size(a,1)-2
+    for j=1:size(a,2)-2
+        b1(i,j)= min(min(h1.*a(i:i+2,j:j+2)));
+    end
+end
+subplot(336);
+imshow(uint8(b1));
+title('min filter');
+
+%2c) Max filters
+a=double(a);
+h1=ones(3,3);
+for i=1:size(a,1)-2
+    for j=1:size(a,2)-2
+        b1(i,j)=max(max(h1.*a(i:i+2,j:j+2)));
+    end
+end
+subplot(337);
+imshow(uint8(b1));
+title('max filter');
+
+
+clc;
+clear all;
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+A=rgb2gray(A);
+%SALT AND PEPPER
+a = imnoise(A,'salt & pepper');
+m = size(a,1);
+n = size(a,2);
+% Zero padding on all 4 sides
+New=zeros(size(a));
+Pad = padarray(a,[1 1]);
+% Median Filter without using a In-Built Funtion
+for i= 1:size(Pad,1)-2
+    for j=1:size(Pad,2)-2
+        filter=zeros(9,1);
+        inc=1;
+        for x=1:3
+            for y=1:3
+                filter(inc)=Pad(i+x-1,j+y-1);
+                inc=inc+1;
+            end
+        end
+        med=sort(filter);
+        New(i,j)=med(5);
+    end
+end
+% Converting the output values to 0-255 range
+I1=uint8(New);
+subplot(335);
+imshow(I1);
+title('Median Filtering');
+
+%2b) Min filters
+a=double(a);
+h1=ones(3,3);
+for i=1:size(a,1)-2
+    for j=1:size(a,2)-2
+        b1(i,j)= min(min(h1.*a(i:i+2,j:j+2)));
+    end
+end
+subplot(336);
+imshow(uint8(b1));
+title('min filter');
+
+%2c) Max filters
+a=double(a);
+h1=ones(3,3);
+for i=1:size(a,1)-2
+    for j=1:size(a,2)-2
+        b1(i,j)=max(max(h1.*a(i:i+2,j:j+2)));
+    end
+end
+subplot(337);
+imshow(uint8(b1));
+title('max filter');
+
+
+clc;
+clear all;
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+A=rgb2gray(A);
+%SPECKLE
+a = imnoise(A,’speckle');
+m = size(a,1);
+n = size(a,2);
+% Zero padding on all 4 sides
+New=zeros(size(a));
+Pad = padarray(a,[1 1]);
+% Median Filter without using a In-Built Funtion
+for i= 1:size(Pad,1)-2
+    for j=1:size(Pad,2)-2
+        filter=zeros(9,1);
+        inc=1;
+        for x=1:3
+            for y=1:3
+                filter(inc)=Pad(i+x-1,j+y-1);
+                inc=inc+1;
+            end
+        end
+        med=sort(filter);
+        New(i,j)=med(5);
+    end
+end
+% Converting the output values to 0-255 range
+I1=uint8(New);
+subplot(335);
+imshow(I1);
+title('Median Filtering');
+
+%2b) Min filters
+a=double(a);
+h1=ones(3,3);
+for i=1:size(a,1)-2
+    for j=1:size(a,2)-2
+        b1(i,j)= min(min(h1.*a(i:i+2,j:j+2)));
+    end
+end
+subplot(336);
+imshow(uint8(b1));
+title('min filter');
+
+%2c) Max filters
+a=double(a);
+h1=ones(3,3);
+for i=1:size(a,1)-2
+    for j=1:size(a,2)-2
+        b1(i,j)=max(max(h1.*a(i:i+2,j:j+2)));
+    end
+end
+subplot(337);
+imshow(uint8(b1));
+title('max filter');
