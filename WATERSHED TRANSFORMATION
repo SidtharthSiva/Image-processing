@@ -1,0 +1,17 @@
+clc;clear all;close all;
+RGB = imread('C:\Users\dip lab 1\Downloads\medpix 27,28\downloadpet.jpg');
+subplot(331),imshow(RGB);
+I = rgb2gray(RGB);
+subplot(332),imshow(I);
+I2 = imtophat(I, strel('disk',50));
+subplot(333),imshow(I2,[]);
+level = graythresh(I2);
+BW = im2bw(I2,level);
+subplot(334),imshow(BW);
+D = -bwdist(~BW);
+subplot(335),imshow(D,[]);
+D(~BW) = -Inf;
+L = watershed(D);
+subplot(336),imshow(label2rgb(L));
+
+
