@@ -1,0 +1,117 @@
+%erosion
+q=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+a=rgb2gray(q);
+figure;
+subplot(451);
+imshow(a);
+title('Original image');
+s=strel('square',100);
+d=imerode(a,s);
+subplot(452);
+imshow(d);
+title('Eroded with square');
+t=strel('ball',50,10);
+e=imerode(a,t);
+subplot(453);
+imshow(e);
+title('Eroded with ball');
+u=strel('line',30,45);
+f=imerode(a,u);
+subplot(454);
+imshow(f);
+title('Eroded with line');
+v=strel('disk',80);
+g=imerode(a,v);
+subplot(455);
+imshow(g);
+title('Eroded with disk');
+
+
+
+%dilation
+q=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+a=rgb2gray(q);
+subplot(456);
+imshow(a);
+title('Original image');
+s=strel('square',80);
+d=imdilate(a,s);
+subplot(457);
+imshow(d);
+title('Dilated with square');
+t=strel('ball',30,15);
+e=imdilate(a,t);
+subplot(458);
+imshow(e);
+title('Dilated with ball');
+u=strel('line',50,45);
+f=imdilate(a,u);
+subplot(459);
+imshow(f);
+title('Dilated with line');
+v=strel('disk',20);
+g=imdilate(a,v);
+subplot(4,5,10);
+imshow(g);
+title('Dilated with disk');
+
+
+
+%opening
+q=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+a=rgb2gray(q);
+
+subplot(4,5,11);
+imshow(a);
+title('Original image');
+s=strel('square',80);
+d=imopen(a,s);
+subplot(4,5,12);
+imshow(d);
+title('Opened with square');
+t=strel('ball',30,15);
+e=imopen(a,t);
+subplot(4,5,13);
+imshow(e);
+title('Opened with ball');
+u=strel('line',80,69);
+f=imopen(a,u);
+subplot(4,5,14);
+imshow(f);
+title('Opened with line');
+v=strel('disk',20);
+g=imopen(a,v);
+subplot(4,5,15);
+imshow(g);
+title('Opened with disk');
+
+
+
+%closing
+q=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+a=rgb2gray(q);
+subplot(4,5,16);
+imshow(a);
+title('Original image');
+s=strel('square',80);
+d=imclose(a,s);
+subplot(4,5,17);
+imshow(d);
+title('Closed with square');
+t=strel('ball',30,15);
+e=imclose(a,t);
+subplot(4,5,18);
+imshow(e);
+title('Closed with ball');
+u=strel('line',80,69);
+f=imclose(a,u);
+subplot(4,5,19);
+imshow(f);
+title('Closed with line');
+v=strel('disk',20);
+g=imclose(a,v);
+subplot(4,5,20);
+imshow(g);
+title('Closed with disk');
+
+
