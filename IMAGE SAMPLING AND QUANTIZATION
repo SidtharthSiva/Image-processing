@@ -1,0 +1,64 @@
+x=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+figure;
+subplot(441);
+imshow(x);
+title('t2 color');
+
+x1=rgb2gray(x);
+subplot(442);
+imshow(x1);
+title('t2 grayscale');
+
+y=x1(1:2:end,:);
+subplot(443);
+imshow(y);
+title('sampled half with x coord');
+
+y1=x1(:, 1:2:end);
+subplot(444);
+imshow(y1);
+title('sampled half with y coord');
+
+y2=x1(1:2:end,1:2:end);
+subplot(445);
+imshow(y2);
+title('sampled half with both coord');
+
+y3=x1(1:4:end,:);
+subplot(446);
+imshow(y3);
+title('sampled quarter with x coord');
+
+y4=x1(:, 1:4:end);
+subplot(447);
+imshow(y4);
+title('sampled quarter with y coord');
+
+y5=x1(1:4:end,1:4:end);
+subplot(448);
+imshow(y5);
+title('sampled quarter with both coord');
+
+
+
+%QUANTIZATION
+x=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+figure;
+subplot(441);
+imshow(x);
+title('t2 color');
+
+x1=rgb2gray(x);
+subplot(442);
+imshow(x1);
+title('t2 grayscale');
+
+y=x1./2;
+subplot(443);
+imshow(y);
+title('quantised /2');
+
+y1=x1./4;
+subplot(444);
+imshow(y1);
+title('quantised /4');
