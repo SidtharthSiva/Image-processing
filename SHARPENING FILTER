@@ -1,0 +1,77 @@
+clc;
+clear all;
+Ib=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+Ib=rgb2gray(Ib);
+[m,n]=size(Ib);
+
+%% Laplacian filter
+k = 3;  k1 = (k-1)/2; k2 = (k+1)/2;
+Izp = [zeros(size(Ib,1),k1),Ib,zeros(size(Ib,1),k1)];
+Izp = [zeros(k1,size(Izp,2));Izp;zeros(k1,size(Izp,2))];
+W1 = [-1,-1,-1;-1,8,-1;-1,-1,-1];
+I1 = Izp;
+for i = 1:m
+    for j = 1:n
+        T = double(Izp(i:i+k-1,j:j+k-1));
+        I1(i+k1,j+k1) = sum(sum(T.*W1));
+    end
+end
+
+I1 = uint8(I1(k2:end-k2+1,k2:end-k2+1));
+figure;
+subplot(331);
+imshow(Ib);
+title('original');
+subplot(332);
+imshow(I1);
+title('laplacian filtered');
+subplot(333);
+imshow(Ib+I1);
+title('sharpened image1');
+
+%Unsharp filter
+% we first apply a smoothing filter
+k = 3;  k1 = (k-1)/2; k2 = (k+1)/2;
+Izp = [zeros(size(Ib,1),k1),Ib,zeros(size(Ib,1),k1)];
+Izp = [zeros(k1,size(Izp,2));Izp;zeros(k1,size(Izp,2))];
+W2 = ones(k,k);
+N = sum(sum(W2));
+Ibb = Izp;
+for i = 1:m
+    for j = 1:n
+       
+        T = double(Izp(i:i+k-1,j:j+k-1));
+        Ibb(i+k1,j+k1) = sum(sum(T.*W2))./N;
+    end
+end
+Ibb = uint8(Ibb(k2:end-k2+1,k2:end-k2+1));
+I2 = Ib-Ibb;
+subplot(334);
+imshow(I2);
+title('unsharp filtered');
+subplot(335);
+imshow(Ib+I2);
+title('sharpened image2');
+
+%Highboost filter
+k =3;  k1 = (k-1)/2; k2 = (k+1)/2;
+A = 2;
+Izp = [zeros(size(Ib,1),k1),Ib,zeros(size(Ib,1),k1)];
+Izp = [zeros(k1,size(Izp,2));Izp;zeros(k1,size(Izp,2))];
+W3 = [-1,-1,-1;-1,8,-1;-1,-1,-1];
+I3 = Izp;
+for i = 1:m
+    for j = 1:n
+        T = double(Izp(i:i+k-1,j:j+k-1));
+        I3(i+k1,j+k1) = sum(sum(T.*W3));
+    end
+end
+I3 = uint8(I3(k2:end-k2+1,k2:end-k2+1));
+subplot(336);
+imshow(I3);
+title('highboost filtered');
+subplot(337);
+imshow(Ib+A*I3);
+title('sharpened image3');
+
+
