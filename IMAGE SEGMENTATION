@@ -1,0 +1,334 @@
+clc;
+clear
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\t2brain.jpg');
+A=rgb2gray(A);
+
+figure(1),subplot(221),imshow(A);title('Original image');
+I=zeros(size(A));
+
+%Filter Masks when diagnols are considered
+F2=[-1 -1 -1;-1 8 -1; -1 -1 -1];
+A=double(A);
+
+for i=1:size(A,1)-2
+for j=1:size(A,2)-2
+    I(i,j)=sum(sum(F2.*A(i:i+2,j:j+2)));
+end
+end
+
+%Displaying the result
+I= uint8(I);
+
+%THRESHOLDING
+[m,n]=size(I);
+for i=1:m
+    for j=1:n
+        if( I(i,j)>50)
+            I(i,j)=255;
+        else
+            I(i,j)=0;
+        end
+    end
+end
+%Displaying the result
+subplot(2,2,2)
+imshow(I,[]);
+title('Point detection ');
+
+
+2.	LINE DETECTION
+
+a.	Horizontal
+clc;
+clear
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\download.jpg');
+A=rgb2gray(A);
+figure(1),subplot(221),imshow(A);title('Original image');
+I=zeros(size(A));
+
+%Filter Masks when diagonals are considered
+F2=[-1 -1 -1;2 2 2; -1 -1 -1];
+A=double(A);
+
+for i=1:size(A,1)-2
+for j=1:size(A,2)-2
+    I(i,j)=sum(sum(F2.*A(i:i+2,j:j+2)));
+end
+end
+
+%Displaying the result
+I= uint8(I);
+%THRESHOLDING
+T=15;  %set threshold
+          if(I(i,j)>=T)
+            I(i,j)=255;
+        else
+            I(i,j)=0;
+          end
+%Displaying the result
+subplot(222),imshow(I,[]);title('Horizontal line detection');
+
+b.	Vertical
+clc;
+clear
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\download.jpg');
+A=rgb2gray(A);
+figure(1),subplot(221),imshow(A);title('Original image');
+I=zeros(size(A));
+
+%Filter Masks when diagnols are considered
+F2=[-1 2 -1;-1 2 -1; -1 2 -1];
+A=double(A);
+
+for i=1:size(A,1)-2
+for j=1:size(A,2)-2
+    I(i,j)=sum(sum(F2.*A(i:i+2,j:j+2)));
+end
+end
+
+%Displaying the result
+I= uint8(I);
+%THRESHOLDING
+T=15;  %set threshold
+          if(I(i,j)>=T)
+            I(i,j)=255;
+        else
+            I(i,j)=0;
+          end
+%Displaying the result
+subplot(222),imshow(I,[]);title('vertical line detection');
+
+c.	+45 degrees
+clc;
+clear
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\download.jpg');
+A=rgb2gray(A);
+figure(1),subplot(221),imshow(A);title('Original image');
+I=zeros(size(A));
+
+%Filter Masks when diagnols are considered
+F2=[-1 2 -1;-1 2 -1; -1 2 -1];
+A=double(A);
+
+for i=1:size(A,1)-2
+for j=1:size(A,2)-2
+    I(i,j)=sum(sum(F2.*A(i:i+2,j:j+2)));
+end
+end
+
+%Displaying the result
+I= uint8(I);
+%THRESHOLDING
+T=15;  %set threshold
+          if(I(i,j)>=T)
+            I(i,j)=255;
+        else
+            I(i,j)=0;
+          end
+%Displaying the result
+subplot(222),imshow(I,[]);title('vertical line detection');
+
+d.	-45 degrees
+clc;
+clear
+A=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\download.jpg');
+A=rgb2gray(A);
+figure(1),subplot(221),imshow(A);title('Original image');
+I=zeros(size(A));
+
+%Filter Masks when diagnols are considered
+F2=[2 -1 -1;-1 2 -1; -1 -1 2];
+A=double(A);
+
+for i=1:size(A,1)-2
+for j=1:size(A,2)-2
+    I(i,j)=sum(sum(F2.*A(i:i+2,j:j+2)));
+end
+end
+
+%Displaying the result
+I= uint8(I);
+%THRESHOLDING
+T=15;  %set threshold
+          if(I(i,j)>=T)
+            I(i,j)=255;
+        else
+            I(i,j)=0;
+          end
+%Displaying the result
+subplot(222),imshow(I,[]);title('-45 line detection');
+
+
+
+3.	EDGE DETECTION
+
+a.	 Sobel
+clc;
+clear
+a=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\download.jpg');
+a=rgb2gray(a);
+figure(1),subplot(221),imshow(a);title('Original image');
+a=imread('coins.png');
+b=im2double(a);
+[m,n]=size(a);
+%SOBEL OPERATOR
+P(1:m,1:n)=0;
+for i=1:m-2;
+    for j=1:n-2;
+      P(i,j)= -1*b(i,j)-2*b(i,j+1)-1*b(i,j+2)+0+0+0+1*b(i+2,j)+2*b(i+2,j+1)+`1*b(i+2,j+2);
+    end;
+end;
+ 
+R(1:m,1:n)=0;
+for i=1:m-2;
+    for j=1:n-2;
+      R(i,j)= -1*b(i,j)+0+1*b(i,j+2)-2*b(i+1,j)+0+2*b(i+1,j+2)-1*b(i+2,j)+0+1*b(i+2,j+2);
+    end;
+end;
+%DIAGONALS
+%SOBEL OPERATOR
+P(1:m,1:n)=0;
+for i=1:m-2;
+    for j=1:n-2;
+      P(i,j)= 0*b(i,j)+1*b(i,j+1)+2*b(i,j+2)+-1*b(i+1,j)+0+1*b(i+1,j+2)-2*b(i+2,j)-1*b(i+2,j+1)+0;
+    end;
+end;
+ 
+R(1:m,1:n)=0;
+for i=1:m-2;
+    for j=1:n-2;
+      R(i,j)= -2*b(i,j)-1*b(i,j+1)+0-1*b(i+1,j)+0+1*b(i+1,j+2)+0+1*b(i+2,j+1)+2*b(i+2,j+2);
+    end;
+end;
+ 
+
+%Displaying Gx and Gy
+figure(1);
+subplot(335),imshow(abs(P),[]),title('Sobel Gx diag');
+subplot(336),imshow(abs(R),[]),title('Sobel Gy diag');
+
+N=abs(P)+abs(R);
+
+%THRESHOLDING
+T=15; %set threshold
+if(N(i,j)>=T)
+N(i,j)=255;
+else
+N(i,j)=0;
+end
+%Displaying the result
+subplot(337),imshow(abs(N),[]); title('Sobel Gx+Gy diag')
+
+b.	Prewitt
+clc;
+clear
+a=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\download.jpg');
+a=rgb2gray(a);
+figure(1),subplot(331),imshow(a);title('Original image');
+b=im2double(a);
+[m,n]=size(a);
+%PREWITT OPERATOR
+P(1:m,1:n)=0;
+for i=1:m-2;
+    for j=1:n-2;
+      P(i,j)= -1*b(i,j)-1*b(i,j+1)-1*b(i,j+2)+0+0+0+1*b(i+2,j)+1*b(i+2,j+1)+1*b(i+2,j+2);
+    end;
+end;
+ 
+R(1:m,1:n)=0;
+for i=1:m-2;
+    for j=1:n-2;
+      R(i,j)= -1*b(i,j)+0+1*b(i,j+2)-1*b(i+1,j)+0+1*b(i+1,j+2)-1*b(i+2,j)+0+1*b(i+2,j+2);
+    end;
+end;
+ 
+
+%Displaying Gx and Gy
+subplot(332),imshow(abs(P),[]),title('Prewitt Gx');
+subplot(333),imshow(abs(R),[]),title('Prewitt Gy');
+
+N=abs(P)+abs(R);
+
+%THRESHOLDING
+T=15; %set threshold
+if(N(i,j)>=T)
+N(i,j)=255;
+else
+N(i,j)=0;
+end
+%Displaying the result
+subplot(334),imshow(abs(N),[]); title('Prewitt Gx+Gy diag');
+
+%DIAGONAL
+P(1:m,1:n)=0;
+for i=1:m-2;
+    for j=1:n-2;
+      P(i,j)= 0*b(i,j)+1*b(i,j+1)+1*b(i,j+2)-1*b(i+1,j)+0+1*b(i+1,j+2)-1*b(i+2,j)-1*b(i+2,j+1)+0*b(i+2,j+2);
+    end;
+end;
+ 
+R(1:m,1:n)=0;
+for i=1:m-2;
+    for j=1:n-2;
+      R(i,j)= -1*b(i,j)-1*b(i,j+2)+0-1*b(i+1,j)+0+1*b(i+1,j+2)+0+1*b(i+2,j+1)+1*b(i+2,j+2);
+    end;
+end;
+ 
+
+%Displaying Gx and Gy
+subplot(335),imshow(abs(P),[]),title('Prewitt Gx diag');
+subplot(336),imshow(abs(R),[]),title('Prewitt Gy diag');
+
+N=abs(P)+abs(R);
+
+%THRESHOLDING
+T=15; %set threshold
+if(N(i,j)>=T)
+N(i,j)=255;
+else
+N(i,j)=0;
+end
+%Displaying the result
+subplot(337),imshow(abs(N),[]); title('Prewitt Gx+Gy diag');
+
+c.	Robert
+clc;
+clear
+a=imread('C:\Users\dip lab 1\Downloads\medpix 27,28\download.jpg');
+a=rgb2gray(a);
+figure(1),subplot(331),imshow(a);title('Original image');
+b=im2double(a);
+[m,n]=size(a);
+%ROBERTS OPERATOR
+P(1:m,1:n)=0;
+for i=1:m-2;
+    for j=1:n-2;
+      P(i,j)= -1*b(i,j)+0+0+1*b(i+1,j+1);
+    end;
+end;
+ 
+R(1:m,1:n)=0;
+for i=1:m-2;
+    for j=1:n-2;
+      R(i,j)=0-1*b(i,j+1)+1*b(i+1,j)+0;
+    end;
+end;
+ 
+
+%Displaying Gx and Gy
+figure(1);
+subplot(332),imshow(abs(P),[]),title('Roberts Gx');
+subplot(333),imshow(abs(R),[]),title('Roberts Gy');
+
+N=abs(P)+abs(R);
+
+%THRESHOLDING
+T=15; %set threshold
+if(N(i,j)>=T)
+N(i,j)=255;
+else
+N(i,j)=0;
+end
+%Displaying the result
+subplot(334),imshow(abs(N),[]); title('Roberts Gx+Gy');
+
